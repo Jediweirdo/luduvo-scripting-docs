@@ -12,7 +12,7 @@ icon: lucide/box
 
 Stub
 
-Currently, this component is only accessible to scripts via [Query Filters](docs/api/query.md#Filtering) and cannot be directly read or edited through scripts.
+Currently, this component is only accessible to scripts via [Query Filters](/luduvo-scripting-docs/api/query) and cannot be directly read or edited through scripts.
 
 ## Properties
 This component currently has no properties editable through queries, Instances, or any other means.

@@ -82,6 +82,6 @@ end
 !!! note
     `EventData` is a "luau-ified" version of `EventType` that maps all its possible data types to their corresponding luau equivalents. `I32`, `F32`, and `U8` collapse into `number`, `Entity` become `Instance`, and `Vec3`/`Color` become `Vector3` and `Color3` respectively
 !!! warning
-    Unlike [Queries](queries.md), events don't need to be refreshed to get the latest version of them because Luduvo automatically clear every event updates every frame. Not only can multiple scripts listen for and react to the same events without knowing that of each other's existance, but **any event not dealth with the frame it was push are gone forever**. If the client/server skips frames, **it can also potentially skip events**. Watch for race conditions and invisible bugs!
+    Unlike [Queries](query.md), events don't need to be refreshed to get the latest version of them because Luduvo automatically clear every event updates every frame. Not only can multiple scripts listen for and react to the same events without knowing that of each other's existance, but **any event not dealth with the frame it was push are gone forever**. If the client/server skips frames, **it can also potentially skip events**. Watch for race conditions and invisible bugs!
 
 It's easiest to think of `Event`s as a collection of remote events constantly listening for updates. Since a server or a client can push multiple events in a single frame, events need to be processed with a loop over `Event.count` (which is the number of events collected in the current frame).

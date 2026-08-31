@@ -32,7 +32,7 @@ game.World.Query(...string) -> Query
 game.World.System(name: string, q: Query, fn: (Query) -> (), phase: string?) -> ()
 ```
 
-World controls the [Query](query.md) and [System](system.md) aspects of Luduvo. More information can be found in their respective documentation.
+World controls the [Query](query.md) and [System](systems.md) aspects of Luduvo. More information can be found in their respective documentation.
 
 ## `game.Physics`
 
@@ -68,7 +68,7 @@ game.Session.PlayerJoined: Signal
 game.Session.PlayerLeft: Signal
 game.Session.CharacterDied: Signal
 ```
-Specifically, the Session's [Signals](signals.md) have the following shapes:
+Specifically, the Session's signals have the following shapes:
 
 ```luau
 game.Session.PlayerJoined:Connect(function(userId)

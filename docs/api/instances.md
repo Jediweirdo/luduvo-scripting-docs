@@ -31,7 +31,7 @@ All of these methods are available on all Instances regardless of where they are
 
 ### Using Prefabs
 
-If you need to factory spawn instances, you can use the [Prefab](prefabs.md) system to create instances from a pre-defined template through the `World.Prefab:Spawn("PrefabName)` method. Details are available in the aformentioned documentation.
+If you need to factory spawn instances, you can use the [Prefab](/luduvo-scripting-docs/api/prefabs) system to create instances from a pre-defined template through the `World.Prefab:Spawn("PrefabName)` method. Details are available in the aformentioned documentation.
 
 ### Using Clones
 
@@ -54,7 +54,7 @@ If you call `Instance:AddComponent(name: string)` from the client, only that spe
 
 If you need to manage a component from a different place than where it was created, you will need to create them from the server and use [Events](events.md) to let clients request mutations to the component.
 
-Once created, the only way to mutate the component fields themselves is through [Queries](queries.md).
+Once created, the only way to mutate the component fields themselves is through [Queries](query.md).
 
 ## Signals
 
@@ -73,7 +73,7 @@ Once a signal is attached to an instance, it can be fired using `Signal:Emit(...
 
 Signal connections and emmissions are completely local to where they are created, so they will **not** be replicated to other clients nor the server. If the server emits a signal on an instance that is replicated to and seen by other clients, only the server's signals will be emitted. If a client emits a signal on an instance that multiple clients and the server are listening to, only that client's signals will be emitted. The `args` defied in `GetSignal` are the exact args that you must emit in `Signal:Emit()` as well as the arguments given to the signal's `:Connect()` listeners.
 
-If you need a signal to emit across multiple clients and the server, you will need to do so by using [Events](events.md) or by putting emmission logic in a [`game.World.Server`](server.md) that polls for changes to the instance's components (which is likely how Luduvo's own signals are handled).
+If you need a signal to emit across multiple clients and the server, you will need to do so by using [Events](events.md) or by putting emmission logic in a `game.World.Server` that polls for changes to the instance's components (which is likely how Luduvo's own signals are handled).
 
 
 Funnily enough, the `Emit` method will work on ANY signal, even if the Signal is supposed to be managed by Luduvo itself. This includes all 4 of the signals naturally created upon Instance creation:
@@ -131,16 +131,16 @@ Property | Scope | Behavior |
 | --- | --- | --- |
 `Kind: string` | Read-only, client and server | Computes a creator-facing entity kind from the entity's component set. `Shape.Type` and UI marker components contribute to the result; there is no single `Kind` component or field. |
 | `Name: string` | Read/write, client and server | Reads or writes the string value stored by the `Name` component.|
-| `Position: vector` | Read/write, client and server | Reads or writes the complete [`Position`](components/position.md) component value. |
-| `Orientation: vector` | Read/write, client and server | Reads or writes the [`Rotation`](components/rotation.md) component. Note that the Instance name (orientation) differs from the actual component name (rotation), but they are the same thing. |
-| `Size: vector` | Read/write, client and server | Reads or writes the complete [`Scale`](components/scale.md) component value. |
-| `Color: vector` | Read/write, client and server | Reads or writes the RGB value in the [`BrickColor`](components/brickcolor.md) component. |
-| `Transparency: number` | Read/write, client and server | Reads or writes the scalar [`Transparency`](components/transparency.md) component value. |
-| `MeshId: number` | Read on client and server; write on server only | Reads or writes the asset-ID value stored by the [`Mesh`](components/mesh.md) component. The stored field name was not recovered. |
-| `TextureId: number` | Read on client and server; write on server only | Reads or writes [`SurfaceAppearance.Albedo`](components/surfaceappearance.md), exposed to Luau as a numeric asset ID. |
-| `EmissiveTextureId: number` | Read on client and server; write on server only | Reads or writes [`SurfaceAppearance.Emissive`](components/surfaceappearance.md), exposed to Luau as a numeric asset ID. |
-| `UnderlayTextureId: number` | Read on client and server; write on server only | Reads or writes [`SurfaceAppearance.Underlay`](components/surfaceappearance.md), exposed to Luau as a numeric asset ID.|
-| `SpawnPoint: boolean` | Read-only, client and server | Reports whether the fieldless [`SpawnPoint`](components/spawnpoint.md) tag component is present.
+| `Position: vector` | Read/write, client and server | Reads or writes the complete [`Position`](/luduvo-scripting-docs/api/components/position) component value. |
+| `Orientation: vector` | Read/write, client and server | Reads or writes the [`Rotation`](/luduvo-scripting-docs/api/components/rotation) component. Note that the Instance name (orientation) differs from the actual component name (rotation), but they are the same thing. |
+| `Size: vector` | Read/write, client and server | Reads or writes the complete [`Scale`](/luduvo-scripting-docs/api/components/scale) component value. |
+| `Color: vector` | Read/write, client and server | Reads or writes the RGB value in the [`BrickColor`](/luduvo-scripting-docs/api/components/brickcolor) component. |
+| `Transparency: number` | Read/write, client and server | Reads or writes the scalar [`Transparency`](/luduvo-scripting-docs/api/components/transparency) component value. |
+| `MeshId: number` | Read on client and server; write on server only | Reads or writes the asset-ID value stored by the [`Mesh`](/luduvo-scripting-docs/api/components/mesh) component. The stored field name was not recovered. |
+| `TextureId: number` | Read on client and server; write on server only | Reads or writes [`SurfaceAppearance.Albedo`](/luduvo-scripting-docs/api/components/surfaceappearance), exposed to Luau as a numeric asset ID. |
+| `EmissiveTextureId: number` | Read on client and server; write on server only | Reads or writes [`SurfaceAppearance.Emissive`](/luduvo-scripting-docs/api/components/surfaceappearance), exposed to Luau as a numeric asset ID. |
+| `UnderlayTextureId: number` | Read on client and server; write on server only | Reads or writes [`SurfaceAppearance.Underlay`](/luduvo-scripting-docs/api/components/surfaceappearance), exposed to Luau as a numeric asset ID.|
+| `SpawnPoint: boolean` | Read-only, client and server | Reports whether the fieldless [`SpawnPoint`](/luduvo-scripting-docs/api/components/spawnpoint) tag component is present.
 
 ### Identity
 
@@ -187,14 +187,14 @@ type BodyMotionMode = "dynamic" | "kinematic"
 
 Property | Scope | Behavior |
 | --- | --- | --- |
-| `Anchored: boolean` | Read/write, client and server | Reports the presence of the fieldless [`Anchored`](components/anchored.md) tag component. Writing `true` adds the tag and writing `false` removes it. |
-| `CollisionGroup: string` | Read/write, client and server | Reads or writes [`CollisionGroup.Group`](components/collisiongroup.md) as a collision-group name rather than exposing the stored numeric group entry. |
-| `Density: number` | Read/write, client and server | Reads or writes [`RigidBody.Density`](components/rigidbody.md). |
-| `Friction: number` | Read/write, client and server | Reads or writes [`RigidBody.Friction`](components/rigidbody.md). |
-| `Restitution: number` | Read/write, client and server | Reads or writes [`RigidBody.Restitution`](components/rigidbody.md). |
-| `LinearDamping: number` | Read/write, client and server | Reads or writes [`RigidBody.LinearDamping`](components/rigidbody.md). |
-| `AngularDamping: number` | Read/write, client and server | Reads or writes [`RigidBody.AngularDamping`](components/rigidbody.md). |
-| `Velocity: vector` | Read-only, client and server | Reads the complete [`Velocity`](components/velocity.md) component value. Use the `SetLinearVelocity` method to write. |
+| `Anchored: boolean` | Read/write, client and server | Reports the presence of the fieldless [`Anchored`](/luduvo-scripting-docs/api/components/anchored) tag component. Writing `true` adds the tag and writing `false` removes it. |
+| `CollisionGroup: string` | Read/write, client and server | Reads or writes [`CollisionGroup.Group`](/luduvo-scripting-docs/api/components/collisiongroup) as a collision-group name rather than exposing the stored numeric group entry. |
+| `Density: number` | Read/write, client and server | Reads or writes [`RigidBody.Density`](/luduvo-scripting-docs/api/components/rigidbody). |
+| `Friction: number` | Read/write, client and server | Reads or writes [`RigidBody.Friction`](/luduvo-scripting-docs/api/components/rigidbody). |
+| `Restitution: number` | Read/write, client and server | Reads or writes [`RigidBody.Restitution`](/luduvo-scripting-docs/api/components/rigidbody). |
+| `LinearDamping: number` | Read/write, client and server | Reads or writes [`RigidBody.LinearDamping`](/luduvo-scripting-docs/api/components/rigidbody). |
+| `AngularDamping: number` | Read/write, client and server | Reads or writes [`RigidBody.AngularDamping`](/luduvo-scripting-docs/api/components/rigidbody). |
+| `Velocity: vector` | Read-only, client and server | Reads the complete [`Velocity`](/luduvo-scripting-docs/api/components/velocity) component value. Use the `SetLinearVelocity` method to write. |
 
 #### Methods
 

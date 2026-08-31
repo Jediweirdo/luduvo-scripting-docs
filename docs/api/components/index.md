@@ -9,7 +9,7 @@ icon: lucide/box
 !!! note
     Components are currently not well documented. If you can, Contribute!
 
-Luduvo Components are bits of data that define the behavior and appearance of [Instances](docs/api/instances.md). While there are ways to individually add, remove, and edit Components, Components largely only matter when [Querying](docs/api/queries.md) Instances, and are generally for internal use. If you feel the need to edit a Component, the best way of doing do by manipulating the Instance itself.
+Luduvo Components are bits of data that define the behavior and appearance of [Instances](luduvo-scripting-docs/api/instances). While there are ways to individually add, remove, and edit Components, Components largely only matter when [Querying](luduvo-scripting-docs/api/query) Instances, and are generally for internal use. If you feel the need to edit a Component, the best way of doing do by manipulating the Instance itself.
 
 Currently, Components are hardcoded into Luduvo's internals, so creating custom Components are impossible. Instead, you can choose from the following built-in components:
 

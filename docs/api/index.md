@@ -11,7 +11,7 @@ Current pages:
 - [Datatypes](datatypes.md)
 - [Prefabs](prefabs/index.md)
 - [Components](components/index.md)
-- [Queries](queries.md)
+- [Query](query.md)
 - [Systems](systems.md)
 - [Events](events.md)
 - [Instances](instances.md)

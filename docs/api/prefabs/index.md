@@ -7,7 +7,7 @@ icon: lucide/box
 !!! note
     If you are familiar with Unity, Luduvo prefabs are conceptually [Unity prefabs](https://docs.unity3d.com/6000.7/Documentation/Manual/Prefabs.html).
 
-Prefabs are premade/serialized [Instances](docs/api/instances.md) that can be easily reused between Luduvo projects, and are required for Luduvo scripts to programmatically spawn non-cloned instances in your game.
+Prefabs are premade/serialized [Instances](/luduvo-scripting-docs/api/instances) that can be easily reused between Luduvo projects, and are required for Luduvo scripts to programmatically spawn non-cloned instances in your game.
 
 Currently, Luduvo ships with these premade prefabs:
 

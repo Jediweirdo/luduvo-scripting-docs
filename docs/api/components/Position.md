@@ -10,7 +10,7 @@ icon: lucide/box
 
 # Position
 
-Position is a Luduvo component that represents the position of an [instance](docs/api/components/instance.md) in a 3D space.
+Position is a Luduvo component that represents the position of an instance in a 3D space.
 
 ## Properties
 
@@ -21,6 +21,6 @@ local positionQuery = game.World.Query("Position")
 local position = positionQuery.Position[1]
 position = Vector3.new(1, 2, 3)
 ```
-This will also work with luau's [builtin vector](https://luau.org/library/#vector-library) values directly. See [Vector3](docs/api/globals.md#data-types) for details.
+This will also work with luau's [builtin vector](https://luau.org/library/#vector-library) values directly. See [Vector3](luduvo-scripting-docs/api/datatypes) for details.
 
-Outside of Query interactions, You can access Position values in Instances via their [`Position`](docs/api/instance.md#position) property.
+Outside of Query interactions, You can access Position values in Instances via their `Position` property.

@@ -18,8 +18,8 @@ icon: lucide/globe
 | -------------------- | ----------------------------------------- |
 | `tick()`             | Return the current timestamp, in seconds  |
 | `typeof(x: unknown)` | Returns the Luduvo type name of the value |
-| `EventHandle()`      | Returns an [Event Handle](events.md#event-handles) usable for client/server communication |
-| `EventTableDump()`   | Returns debug information about all active event handles. See [Event Dumps](events.md#event-dumps) |
+| `EventHandle()`      | Returns an Event Handle usable for client/server communication |
+| `EventTableDump()`   | Returns debug information about all active event handles |
 
 ## Lifetime Functions
 

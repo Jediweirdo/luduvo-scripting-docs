@@ -10,10 +10,10 @@ icon: lucide/box
 
 # Rotation
 
-Rotation is a Luduvo component that represents the 3D rotation of an [Instance](docs/api/components/instance.md).
+Rotation is a Luduvo component that represents the 3D rotation of an [Instance](luduvo-scripting-docs/api/components/instance).
 
 Currently, this component is only accessible to scripts via [Query Filters](docs/api/components/Query) and cannot be directly read or edited through scripts.
 
 ## Properties
 
-This component has no properties editable through queries. If you need to read or edit rotation values, use the [`Orientation`](docs/api/instance.md#orientation) property in Instances instead.
+This component has no properties editable through queries. If you need to read or edit rotation values, use the `Orientation` property in Instances instead.
