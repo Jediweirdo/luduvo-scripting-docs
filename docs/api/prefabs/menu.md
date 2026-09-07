@@ -14,7 +14,7 @@ local menu = game.Prefabs.Spawn("Menu")
 ```
 
 !!! warning
-    `Spawn` can only be called from server scripts and must be parented to an [Instance](luduvo-scripting-docs/docs/api/classes/Instance.md){ data-preview } in the world hierarchy to be seen.
+    `Spawn` can only be called from server scripts. Its returned root must be parented to an [Instance](../instances.md){ data-preview } in the world hierarchy to be seen.
 
 Menu descendants use the registered UI and core-menu components documented in the [component registry](../components/index.md).
 

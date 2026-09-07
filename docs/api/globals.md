@@ -4,15 +4,15 @@ icon: lucide/globe
 
 # Globals
 
-Luduvo adds the following names to each script environment. API names are case-sensitive.
+Luduvo injects the following variables to every script it loads to run:
 
-## Script values
+## Tables and Userdata
 
 | Name | Description |
 | --- | --- |
 | `self: Instance` | The [Instance](instances.md) to which the current script is attached. |
-| `handles` | The current Instance's named [script handles](scripts.md#script-handles). |
-| `game` | The root table for Luduvo's nine [services](game.md). |
+| `handles` | A table containing all named [script handles](scripts.md#script-handles). Does not get injected if there are no defined handles. |
+| `game` | The root table for Luduvo's nine [global properties](game.md). |
 
 ## Functions
 
@@ -27,12 +27,12 @@ Luduvo adds the following names to each script environment. API names are case-s
 
 ## Lifecycle functions
 
-These are specially named functions that a script may define:
+These are specially Luduvo-owned functions that a script may define:
 
 | Name | Description |
 | --- | --- |
 | `Update(dt: number)` | A function that Luduvo runs every frame. |
-| `PhysicsUpdate(dt: number)` | A function that Luduvo consistantly runs every `0.01666666753590107` seconds. |
+| `PhysicsUpdate(dt: number)` | A function that Luduvo consistently calls to run every `dt` (`0.01666666753590107`) seconds. |
 
 ## Datatypes
 
@@ -57,5 +57,5 @@ UDim2.new(
 ) -> UDim2
 ```
 
-`Vector3`, `Vector2`, and `Color3` all derive to Luau's native `vector` type and thus can be used interchangablely. 
-`UDim2` is very similiar to Roblox's `UDim2` type, but Luduvo does not expose Roblox's full `UDim2` API. See [Datatypes](datatypes.md) for full details.
+`Vector3`, `Vector2`, and `Color3` all produce Luau's native `vector` type and can therefore be used interchangeably.
+`UDim2` is very similar to Roblox's `UDim2` type, but Luduvo does not expose Roblox's full `UDim2` API. See [Datatypes](datatypes.md) for full details.

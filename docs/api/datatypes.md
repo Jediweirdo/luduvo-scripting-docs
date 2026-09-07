@@ -54,7 +54,7 @@ See [Events](events.md) for more details.
 
 ## `Instance`
 
-An `Instance` is the scripting equivalent of an ECS Entity. While there is currently no `Instance.new()` constructor, you can still programmatically obtain an Instance from [`game.Prefabs.Spawn`](prefabs/index.md#spawning-prefabs), [`Instance:Clone`](instances.md#cloning), [queries](queries.md), [World hierarchy traversal](instances.md#from-existing-instances), [script handles](scripts.md#script-handles), and any other APIs that return entities.
+An `Instance` is the scripting equivalent of an ECS Entity. While there is currently no `Instance.new()` constructor, you can still programmatically obtain an Instance from [`game.Prefabs.Spawn`](prefabs/index.md#spawning-prefabs), [`Instance:Clone`](instances.md#cloning), [queries](query.md), [World hierarchy traversal](instances.md#from-existing-instances), [script handles](scripts.md#script-handles), and any other APIs that return entities.
 
 See [Instances](instances.md#reference) for more details.
 

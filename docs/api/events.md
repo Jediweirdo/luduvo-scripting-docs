@@ -4,11 +4,11 @@ icon: lucide/send
 
 # Events
 
-Events are the main way to send data back and forth between the client and server without worrying about scope and replication issues. They are not Instances nor for script to script local communication. Instead, use local [signals](instances.md#signals) when there is no need to communicate thorugh the internet.
+Events are the main way to send data back and forth between the client and server without worrying about scope and replication issues. They are not Instances nor for script-to-script local communication. Instead, use local [signals](instances.md#signals) when there is no need to communicate through the internet.
 
 ## Creating Events
 
-In Luduvo, Events are not an object apart of the World Hiearchy. To create an Event, you instead use the global `EventTable()` function:
+In Luduvo, Events are not objects in the World Hierarchy. To create an Event, use the global `EventTable()` function:
 
 ```luau
 type EventDirection = typeof(ToServer) | typeof(ToClients)
@@ -23,7 +23,7 @@ EventTable(
 ) -> EventTable
 ```
 
-!!! note 
+!!! note
     The directions and field types are **not** strings, but a [global datatype](datatypes.md#events). You should not need to use quotation marks. 
 
 An EventTable takes the `name` of the event, which `direction` data is expected to transfer (it can either travel to the Server or to the Clients), and a table outlining the shape future data tables (A.K.A `fields`) will take when you send or receive data through this Event.
@@ -76,7 +76,7 @@ When making fields for an EventTable, these are the supported field types you ca
 
 ## Using EventTables
 
-Similiarly to [Queries](queries.md#query-for-components), after creating an EventTable through `EventTable()`, you get a `EventTable` object that you then use to send and receive events through the internet:
+Similarly to [Queries](query.md#query-for-components), after creating an EventTable through `EventTable()`, you get an `EventTable` object that you then use to send and receive events through the internet:
 
 ```luau
 
@@ -120,13 +120,13 @@ When events are pushed to your device, the `EventTable` object automatically sto
     Because there is a chance that the Instance sent through an `Entity` field will get destroyed before the data is able to arrive to its intended destination, the field accepts an `Instance` or `nil` if the reference cannot be resolved.
 
 !!! warning
-    EventTables store every event that it receives that specific frame. When the frame ends, **the EventTable is cleared regardless of if you are done with that data.** Take care to separetely store data you need to process over the course of multiple frames or you will lose the data forever. For more information, see the [Lifetime and Batch rules section](events.md#batch-lifetime-rules-and-limits).
+    EventTables store every event that they receive during a frame. When the frame ends, **the EventTable is cleared regardless of whether you are done with that data.** Store data separately if you need to process it over multiple frames or you will lose it. For more information, see the [Lifetime and Batch rules section](#batch-lifetime-rules-and-limits).
 
 Every time an event is received, the `EventTable` object stores the received payloads directly inside itself through a dedicated `EventColumn` array for each expected field. 
 
 Outside of the event payload data, EventTables also populates a `count` that stores the number of events the EventTable received in that frame. If the EventTable in question is a `ToServer` table, it will also create a dedicated `sender` eventColumn that stores the userId of the client that sent the event.
 
-Similiarly to [QueryColumns](queries.md#using-queries), Data received from events pushed to your device are sorted by their data and must be accessed through index-based for loops:
+Similarly to [QueryColumns](query.md#using-queries), data received from events pushed to your device are sorted by field and must be accessed through index-based `for` loops:
 
 ```luau
 for i = 1, damage.count do
@@ -145,7 +145,7 @@ Incoming events are the batch of events received on that specific frame. Unlike 
 
 Multiple scripts may read the same rows during that frame, but reading said events does not consume them. Luduvo clears the incoming batch when the event system advances to the next frame, so you will need to copy any data to a new variable if you need said data to survive longer.
 
-Each event table accepts at most 64 incoming and 64 outgoing events per frame. There is does not seem to be similiar limits for how many eventColumns you can have per event.
+Each EventTable accepts at most 64 incoming and 64 outgoing events per frame. There does not seem to be a similar limit on the number of event columns.
 
 If you ever need to debug event tables, the global `EventTableDump()` prints diagnostic information about every active event table to the console, but returns nothing.
 

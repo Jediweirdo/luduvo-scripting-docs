@@ -7,7 +7,7 @@ icon: lucide/package
 !!! note
     If you are familiar with Unity, Luduvo prefabs are conceptually similar to [Unity prefabs](https://docs.unity3d.com/6000.7/Documentation/Manual/Prefabs.html).
 
-Prefabs are premade/serialized [Instances](/luduvo-scripting-docs/api/instances) that can be easily reused between Luduvo projects, and are required for Luduvo scripts to programmatically spawn non-cloned instances in your game.
+Prefabs are premade, serialized [Instances](../instances.md){ data-preview } that can be reused between Luduvo projects. Luduvo scripts use them to programmatically spawn Instances that are not clones of an existing entity.
 
 Luduvo ships these core prefabs:
 
@@ -19,7 +19,7 @@ Luduvo ships these core prefabs:
 
 ## Storage
 
-Prefabs are stored in the `core://prefabs/` and `project://prefabs/` virtual mounts. Both `core://` and `project://` are virtual mounts Luduvo uses as aliases, not directories literally named `core:` or `project:`. Prefabs and other core files are versioned and updated by Luduvo, so do not edit their physical cache files.
+Prefabs are stored in the `core://prefabs/` and `project://prefabs/` virtual mounts. Prefabs and other files stored in `core://` are versioned and updated by Luduvo.
 
 ## Creating and editing prefabs
 

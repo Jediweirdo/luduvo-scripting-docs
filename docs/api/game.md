@@ -4,7 +4,7 @@ icon: lucide/globe
 
 # Game
 
-Game is Luduvo's biggest and potentially most important global variable. Outside of holding information that universally affects the entire game, it also somewhat doubles somewhat as a junk drawer that hold debug information that don't have any other obvious place to live.
+`game` is Luduvo's largest and potentially most important global variable. In addition to information that affects the entire game, it holds utility and diagnostic services that do not have another obvious home.
 
 
 ## `game.Prefabs`
@@ -20,11 +20,11 @@ See [Prefabs](prefabs/index.md) for more information on how to use prefabs.
 
 | Method | Scope | Behavior |
 | --- | --- | --- |
-| `Each(component: string) -> () -> Instance?` | Server and Client | Finds all entities in the current frame that has the given component. Unknown names raise an error. |
+| `Each(component: string) -> () -> Instance?` | Server and Client | Returns an iterator over Instances in the current snapshot that have the given component. Unknown names raise an error. |
 | `DumpAttributes() -> ()` | Server and Client | Prints the attribute-name usage for every Instance in the entire World. |
-| `DumpAttributes(entity: Instance) -> ()` | Server and Client | Prints world-wide usage, then the selected entity's attributes. Explicit `nil` is not the same as omitting the argument and is rejected. |
-| `Query(...componentNames: string) -> Query` | Server and Client | Creates a reusable ECS Query. At least one component is required; each Lua state may hold at most 256 live queries. |
-| `System(name: string, query: Query, callback: (Query) -> (), phase: "Default" \| "Physics"?) -> ()` | Server and Client | Registers a system that runs a `callback` function anytime the given `query` gets at least one match. |
+| `DumpAttributes(entity: Instance) -> ()` | Server and Client | Prints world-wide usage, then the selected Instance's attributes.|
+| `Query(...componentNames: string) -> Query` | Server and Client | Creates a reusable ECS Query. At least one component name is required. Each game can hold at most 256 live queries. |
+| `System(name: string, query: Query, callback: (Query) -> (), phase: "Default" \| "Physics"?) -> ()` | Server and Client | Registers a system that refreshes the Query and runs the callback every scheduled phase, including when the Query has no matches. |
 
 See [Queries](query.md) and [Systems](systems.md) for more information.
 
@@ -44,8 +44,8 @@ type RaycastResult = {
 | `RegisterCollisionGroup(name: string) -> ()` | Server | Adds a collision group. Names are limited to 23 letters/bytes, and the build-specific table can hold up to 32 names including `Default`. |
 | `RenameCollisionGroup(from: string, to: string) -> ()` | Server | Renames a registered group. The destination must be nonempty, at most 23 letters/bytes, and unused. |
 | `SetCollisionRule(a: string, b: string, collidable: boolean) -> ()` | Server | Changes whether two registered groups can collide. |
-| `Raycast(origin: vector, direction: vector, maxDistance: number, ignore: Instance?) -> RaycastResult?` | Server and Client | Casts in the caller's local physics world. A miss, near-zero direction, or non-positive distance returns `nil`. `RaycastResult.Entity` may be `nil` if the hit entity is destroyed by the time you read the value. |
-| `OverlapSphere(center: vector, radius: number, out: {Instance}?) -> (number, {Instance})` | Server and Client | Returns the first 64 unique entities that are within the specified sphere. If `out` is supplied, Luduvo reuses it and overwrites indices `1..count`; older entries above `count` remain. |
+| `Raycast(origin: vector, direction: vector, maxDistance: number, ignore: Instance?) -> RaycastResult?` | Server and Client | Casts in the caller's local physics world. A miss, near-zero direction, or non-positive distance returns `nil`. `RaycastResult.Entity` may be `nil` if the hit Instance is destroyed by the time you read the value. |
+| `OverlapSphere(center: vector, radius: number, out: {Instance}?) -> (number, {Instance})` | Server and Client | Returns the first 64 unique Instances that are within the specified sphere. If `out` is supplied, Luduvo reuses it and overwrites indices `1..count`; older entries above `count` remain. |
 
 ```luau
 local hit = game.Physics.Raycast(
@@ -60,12 +60,12 @@ if hit ~= nil then
 end
 ```
 
-### Properties
+`game.Physics` comes with some properties as well:
 
 | Property | Scope | Behavior |
 | --- | --- | --- |
-| `Gravity: number` | Read Server and Client; Write Server | Reads or writes the [`WorldConfig.Gravity`](components/worldconfig.md){ data-preview } Component field. |
-| `FallenPartsDestroyHeight: number` | Read Server and Client; Write Server | Reads or writes the [`WorldConfig.FallenPartsDestroyHeight`](components/worldconfig.md){ data-preview } Component field. |
+| `Gravity: number` | Read Server and Client; Write Server | Reads or writes the [`WorldConfig.Gravity`](components/WorldConfig.md){ data-preview } Component field. |
+| `FallenPartsDestroyHeight: number` | Read Server and Client; Write Server | Reads or writes the [`WorldConfig.FallenPartsDestroyHeight`](components/WorldConfig.md){ data-preview } Component field. |
 
 ## `game.Session`
 
@@ -110,7 +110,7 @@ game.Items.Examine(
 | --- | --- | --- |
 | `Examine(kind, bytes: string) -> ItemExamination` | Server | When given an entire `.ldv` file's bytes, it inspects its contents in a test world and returns data useful for debugging and file validation. |
 
-`bytes` expects the file's entire binary contents in a Luau string, not a path or URI. Currently, there is no scripting API endpoint for obtaining a .ldv file's raw bytes, so most will not get much milage out of this method.
+`bytes` expects the file's entire binary contents in a Luau string, not a path or URI. Currently, there is no scripting API endpoint for obtaining an `.ldv` file's raw bytes, so most scripts will not get much mileage out of this method.
 
 Below is all the data inside a `ItemExamination` result:
 

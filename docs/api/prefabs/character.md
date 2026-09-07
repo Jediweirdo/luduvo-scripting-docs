@@ -7,7 +7,7 @@ icon: lucide/user-round
 !!! note
     This page is still a work in progress. The spawning API and component names are confirmed; a complete custom-character workflow is not.
 
-`Character` is Luduvo's built-in character prefab. The core `PlayerSpawner` script creates it by default, positions the returned root, and passes it to `game.Session.BindCharacter`.
+`Character` is one of Luduvo's built-in [Prefabs](index.md){ data-preview }. [`PlayerSpawner`](playerspawner.md) creates it by default, positions the returned root, and passes it to `game.Session.BindCharacter`.
 
 ```luau
 local character = game.Prefabs.Spawn("Character")

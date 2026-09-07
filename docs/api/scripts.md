@@ -24,11 +24,11 @@ The loader recognizes these filename suffixes:
 
 Studio currently presents one attached script slot for an Instance. The native evidence does not establish whether every loader path enforces that as a universal one-script limit.
 
-Within scripts, the `self` global points towards the Instance that the script is attached to. This is the equivalent of using `script.Parent` in roblox.
+Within scripts, the `self` global points to the Instance that the script is attached to. This is the equivalent of using `script.Parent` in Roblox.
 
 ## Script Handles
 
-Script Handles allow you to set references to other Instances via the [`Properties`](../editor/properties.md) panel in Luduvo Studio.
+Script Handles allow you to set references to other Instances via the [`Properties`](../editor/tabs/properties.md) panel in Luduvo Studio.
 
 ![image](../assets/imgs/scripts/ScriptHandles.png)
 
@@ -36,7 +36,7 @@ The example shows adding a Script Handle named `Map` onto PartA. The reference i
 
 In this example, inside a script attached to PartA:
 
-```lua linenums="1"
+```luau linenums="1"
 print(handles.Map.Name) --(1)!
 ```
 

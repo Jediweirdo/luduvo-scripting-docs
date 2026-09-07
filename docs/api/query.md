@@ -4,7 +4,7 @@ icon: lucide/list-filter
 
 # Queries
 
-Queries are the main way you search for an arbitrary amount of [Instances](instances.md){ data-preview } in a Luduvo World. If you know the specific type or specific locations of Instance you're looking for, you can use a [Script handle](scripts.md#script-handles) or [Instance hierarchy methods](instances.md#using-the-editor).
+Queries are the main way you search for any number of [Instances](instances.md){ data-preview } in a Luduvo World. If you know the specific type or location of the Instance you're looking for, you can use a [Script handle](scripts.md#script-handles) or [Instance hierarchy methods](instances.md#world-hierarchy).
 
 ## Query for Components
 
@@ -72,7 +72,7 @@ end
 Alongside `Query.count`, `Refresh()` also returns the number of matching Instances it found from its search.
 
 !!! note
-    For performance reasons, only [System Queries](systems.md) update themselves without `Refresh()`.
+    For performance reasons, only [System Queries](systems.md) are capable of updating themselves without manually calling `Refresh()`.
 
 ### Using Queries
 
@@ -120,9 +120,9 @@ When it comes to modifying Components through a Query (case 3), there are three 
     Query writes are invisible to all other scripts until the beginning of the next frame when other queries run `Query:Refresh()`. Be careful of race conditions!
 
 !!! note
-    Server and client writes to components follow strict replication rules. Client writes modify only the client's local World and cannot be seen by other clients. Clients also cannot write to replicated or components otherwise owned by a server script. If you need to edit a Server-script owned value, use a [`ToServer` event table](events.md#client-to-server-example).
+    Server and client writes to components follow strict replication rules. Client writes modify only the client's local World and cannot be seen by other clients. Clients also cannot write to replicated or components otherwise owned by a server script. If you need to edit a Server-script owned value, use a [`ToServer` EventTable](events.md).
 
-The first way is to directly access its fields similiarly to Instance access:
+The first way is to access its value directly, similarly to an Instance property:
 
 ```luau
 for i = 1, movers.count do
@@ -133,7 +133,7 @@ for i = 1, movers.count do
 end
 ```
 !!! note
-    Accessing Components through this way is likely exclusive to components that only contain a single field. 
+    This whole-value access is a fixed binding for the four components listed below. It is not determined by how many serialized fields a component has.
 
 As of writing, only four built-in components can be exposed as raw values in this build, and not all of them are writable:
 
@@ -144,7 +144,7 @@ As of writing, only four built-in components can be exposed as raw values in thi
 | `query.BrickColor[i]` | `vector` | yes |
 | `query.Velocity[i]` | `vector` | no |
 
-The second possible shape is a table:
+The second possible shape is a nested field proxy:
 
 ```luau
 local spawners = game.World.Query("PlayerSpawner")
@@ -154,13 +154,13 @@ local prefabName: string = spawners.PlayerSpawner.character[1]
 spawners.PlayerSpawner.respawnDelay[1] = 3
 ```
 
-For now, only custom components like [`PlayerSpawner`](components/playerspawner.md) and [`Tool`](components/tool.md){data-preview} are returned as tables.
+For now, only Components that the engine refers to as "custom" (like [`PlayerSpawner`](components/PlayerSpawner.md){ data-preview } and [`Tool`](components/Tool.md){ data-preview }) expose these nested field proxies.
 
-The third possible shape is nothing at all, which is what most Components currently return. The six Components mentioned above (position, scale, color, velocity, playerSpawner, and tool) are the only Components that are currently accessible when accessed via `Query`. To change the rest of the Components, you will need to use a property or method accessible from [game](game.md) or an [Instance](instances.md#reference)
+The third possible shape is no value column at all, which is what most Components currently return. The six Components mentioned above (`Position`, `Scale`, `BrickColor`, `Velocity`, `PlayerSpawner`, and `Tool`) are the only Components currently accessible as values through a Query. To change the rest, use an available property or method on [game](game.md) or an [Instance](instances.md#reference).
 
 ## Query for Instances
 
-The `World.Each` method is very similiar to `World.Query`, but it only accepts a single component query term and does not return a Query result. Instead, it returns a list of all Instances that have the specified component. If you need a quock way to iterate over a group of Instances, this is how you do it:
+The `World.Each` method is similar to `World.Query`, but it only accepts a single component query term and does not return a Query result. Instead, it returns an iterator over Instances that have the specified component. If you need a quick way to iterate over a group of Instances, this is how you do it:
 
 ```luau
 game.World.Each(component: string) -> () -> Instance?
@@ -172,6 +172,6 @@ end
 
 It skips Instances managed internally by Luduvo, Instances that are marked to be destroyed, and Instances that only obtained the queried component the same frame it was queried on. 
 
-Like `Query`, `Each` does not automatically refresh itself and you must call it again to get an updated list of elegible Instances from that frame.
+Like `Query`, `Each` does not automatically refresh itself, and you must call it again to get an updated snapshot of eligible Instances from that frame.
 
-`Each` is usful if you need to find instances but don't want to go through the process of creating a `Query`. Use `World.Query` when you need several component filters, component values, or a reusable result.
+`Each` is useful if you need to find Instances but don't want to create a `Query`. Use `World.Query` when you need several component filters, component values, or a reusable result.
