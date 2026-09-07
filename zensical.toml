@@ -116,8 +116,8 @@ nav = [
     { "Character" = "api/prefabs/character.md" },
     { "Menu" = "api/prefabs/menu.md" },
     { "Part" = "api/prefabs/part.md" },
-    { "Playerspawner" = "api/prefabs/playerspawner.md" },
-    { "Spawnlocation" = "api/prefabs/spawnlocation.md" },
+    { "PlayerSpawner" = "api/prefabs/playerspawner.md" },
+    { "SpawnLocation" = "api/prefabs/spawnlocation.md" },
   ] },
   # NAVGEN -- PREFABS END
   ] },
@@ -228,3 +228,4 @@ pymdownx.tabbed.combine_header_slug = true
 pymdownx.tasklist.custom_checkbox = true
 pymdownx.tilde = {}
 pymdownx.blocks.caption = {}
+zensical.extensions.preview = {}

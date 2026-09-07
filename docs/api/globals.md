@@ -4,37 +4,58 @@ icon: lucide/globe
 
 # Globals
 
-## Keywords
+Luduvo adds the following names to each script environment. API names are case-sensitive.
 
-| Name                 | Description                                                                                            |
-| -------------------- | ------------------------------------------------------------------------------------------------------ |
-| `self`               | Returns the [Instance](instances.md) that the script is attached to                                                    |
-| `handles`            | Returns the [Script Handles](scripts.md#script-handles) of the Instance that the script is attached to |
-| `game`               | Returns the [Game](game.md) object that holds all the game-specific state and Services |
+## Script values
+
+| Name | Description |
+| --- | --- |
+| `self: Instance` | The [Instance](instances.md) to which the current script is attached. |
+| `handles` | The current Instance's named [script handles](scripts.md#script-handles). |
+| `game` | The root table for Luduvo's nine [services](game.md). |
 
 ## Functions
 
-| Name                 | Description                               |
-| -------------------- | ----------------------------------------- |
-| `tick()`             | Return the current timestamp, in seconds  |
-| `typeof(x: unknown)` | Returns the Luduvo type name of the value |
-| `EventHandle()`      | Returns an Event Handle usable for client/server communication |
-| `EventTableDump()`   | Returns debug information about all active event handles |
+| Name | Description |
+| --- | --- |
+| `print(...any) -> ()` | Writes values to the output log. |
+| `warn(...any) -> ()` | Writes a warning to the output log. |
+| `tick() -> number` | Returns a runtime time value in seconds. Use differences between calls to measure elapsed time. |
+| `typeof(value: any) -> string` | Returns Luduvo's runtime type name for a value. |
+| `EventTable(...) -> EventTable` | Declares or opens a typed [client/server event table](events.md). |
+| `EventTableDump() -> ()` | Prints diagnostic information about active event tables. |
 
-## Lifetime Functions
+## Lifecycle functions
 
-| Name                        | Description                                               |
-| --------------------------- | --------------------------------------------------------- |
-| `Update(dt: number)`        | Fires every frame on the client or server                 |
-| `PhysicsUpdate(dt: number)` | Fires every physics step, presumably at a fixed frequency |
+These are specially named functions that a script may define:
 
-## Data Types
-!!! note
-    For more information on specific data types, see [Data Types](datatypes.md)
+| Name | Description |
+| --- | --- |
+| `Update(dt: number)` | A function that Luduvo runs every frame. |
+| `PhysicsUpdate(dt: number)` | A function that Luduvo consistantly runs every `0.01666666753590107` seconds. |
 
-| Name       | Description                                                                 |
-| ---------- | --------------------------------------------------------------------------- |
-| `Vector3`  | A functionally identical wrapper around luau's [builtin vector](https://luau.org/library/#vector-library) data type that likely exists for semantic clarity reasons |
-| `Vector2`  | A wrapper around luau's [builtin vector](https://luau.org/library/#vector-library) data type, but it sets the vector's `z` component to 0. Functionally identical to a normal `Vector3`, and likely exists for semantic clarity reasons |
-| `Color3`   | A wrapper around luau's [builtin color](https://luau.org/library/#color-library) data type. Functionally identical to a normal `Vector3`, and likely exists for semantic clarity reasons |
-| `UDim2`    | Roblox's [UDim2](https://developer.roblox.com/en-us/api-reference/datatype/UDim2) data type partially reimplemented into Luduvo. |
+## Datatypes
+
+Luduvo has the following global datatypes:
+
+```luau
+Vector3.new(x: number, y: number, z: number) -> vector
+Vector3.zero: vector
+Vector3.one: vector
+Vector3.xAxis: vector
+Vector3.yAxis: vector
+Vector3.zAxis: vector
+
+Vector2.new(x: number, y: number) -> vector -- z is 0
+Color3.new(r: number, g: number, b: number) -> vector
+
+UDim2.new(
+    xScale: number?,
+    xOffset: number?,
+    yScale: number?,
+    yOffset: number?
+) -> UDim2
+```
+
+`Vector3`, `Vector2`, and `Color3` all derive to Luau's native `vector` type and thus can be used interchangablely. 
+`UDim2` is very similiar to Roblox's `UDim2` type, but Luduvo does not expose Roblox's full `UDim2` API. See [Datatypes](datatypes.md) for full details.

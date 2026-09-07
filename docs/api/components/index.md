@@ -4,14 +4,58 @@ icon: lucide/box
 
 # Components
 
-!!! warning
-    Scripting components and Editor components are currently different enough to the point that they might as well be treated as separate systems. Do not rely on component hierarchies displayed by the editor, as they do not reflect the actual scripting component hierarchy.
-!!! note
-    Components are currently not well documented. If you can, Contribute!
+Components are the data attached to ECS entities. An [Instance](../instances.md) is
+the Luau proxy for one entity, not a container holding generic component objects.
 
-Luduvo Components are bits of data that define the behavior and appearance of [Instances](luduvo-scripting-docs/api/instances). While there are ways to individually add, remove, and edit Components, Components largely only matter when [Querying](luduvo-scripting-docs/api/query) Instances, and are generally for internal use. If you feel the need to edit a Component, the best way of doing do by manipulating the Instance itself.
+Studio labels such as **Transform**, **Data**, **Physics**, **Color**, and
+**Material** are Inspector groups. They are not script component names. For
+example, Transform corresponds to the separate `Position`, `Rotation`, and
+`Scale` query terms.
 
-Currently, Components are hardcoded into Luduvo's internals, so creating custom Components are impossible. Instead, you can choose from the following built-in components:
+## Script access
+
+Every built-in name below can be used as an exact, case-sensitive filter with
+[`game.World.Query`](../query.md), `Query:With`, `Query:Without`,
+`game.World.Each`, `HasComponent`, `AddComponent`, and `RemoveComponent`, subject
+to the component's write scope.
+
+Only four built-ins expose a whole value through a Query column:
+
+| Query column | Luau type | Writable through Query |
+| --- | --- | :---: |
+| `query.Position[i]` | `vector` | yes |
+| `query.Scale[i]` | `vector` | yes |
+| `query.BrickColor[i]` | `vector` | yes |
+| `query.Velocity[i]` | `vector` | no |
+
+Other built-ins are filter-only in a Query. Some still have a separate fixed
+Instance property, method, or game-service route; each component page identifies
+that route. Inspector fields are serialization and editor metadata. They do not
+automatically become `instance.Component.field` Luau properties.
+
+## Custom data
+
+Projects cannot declare new component schemas in this build. Components are
+registered in the engine, and `AddComponent` can attach only a registered name.
+The installed platform defines two structured custom components:
+
+```luau
+type PlayerSpawnerComponent = {
+    character: string,
+    respawnDelay: number,
+}
+
+type ToolComponent = {
+    equipped: number, -- U8, clamped to 0 through 255
+}
+```
+
+These use nested Instance or Query field proxies. They are compiled platform
+extensions, not examples of a public component-declaration API. Use
+[`instance.attr`](../instances.md#components-and-attributes) for creator-defined
+named data.
+
+## Built-in component names
 
 - [Admin](Admin.md)
 - [AmbientLight](AmbientLight.md)

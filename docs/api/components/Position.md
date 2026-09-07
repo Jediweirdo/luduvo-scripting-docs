@@ -3,24 +3,25 @@ icon: lucide/box
 ---
 
 !!! note
-    This is a stub and currently a work in progress. Contribute, or come back later for updates!
+    This is still a stub. The scripting routes below are confirmed, but the
+    component's editor behavior and serialized fields are not fully documented.
 
 !!! note
-    In the alpha build of Luduvo, scriptable components and components shown/organized in the editor's properties panel are completely different, with some compoents not even being accessible via the editor's properties panel and vice versa. Tread with caution.
+    Studio's property groups and the scripting component API are different. A
+    label shown in the Properties panel is not automatically a component name or
+    a Luau field.
 
 # Position
 
-Position is a Luduvo component that represents the position of an instance in a 3D space.
+`Position` is an exact, case-sensitive built-in component name. You can use it
+with [`game.World.Query`](../query.md), `Query:With`, `Query:Without`,
+[`game.World.Each`](../query.md#gameworldeach), and the Instance component
+methods.
 
-## Properties
+## Script access
 
-As with the other 4 scriptable components, Luduvo handles this property's Query interactions with a special case. Instead of breaking Position into `X`, `Y`, and `Z` components, it treats it as a single luau `vector` value. As such, use looks like this:
+Queries expose `query.Position[i]` as `vector` (read/write). Its separate scripting route is `Instance.Position: vector`.
 
-```lua
-local positionQuery = game.World.Query("Position")
-local position = positionQuery.Position[1]
-position = Vector3.new(1, 2, 3)
-```
-This will also work with luau's [builtin vector](https://luau.org/library/#vector-library) values directly. See [Vector3](luduvo-scripting-docs/api/datatypes) for details.
-
-Outside of Query interactions, You can access Position values in Instances via their `Position` property.
+Inspector fields are serialization/editor metadata and are not automatically
+available as Luau fields. See [Components](index.md) for that distinction and
+[Instances](../instances.md#properties) for fixed property types and write scope.

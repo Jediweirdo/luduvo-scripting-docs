@@ -3,16 +3,25 @@ icon: lucide/box
 ---
 
 !!! note
-    This is a stub and currently a work in progress. Contribute, or come back later for updates!
+    This is still a stub. The scripting routes below are confirmed, but the
+    component's editor behavior and serialized fields are not fully documented.
 
 !!! note
-    In the alpha build of Luduvo, scriptable components and components shown/organized in the editor's properties panel are completely different, with some compoents not even being accessible via the editor's properties panel and vice versa. Tread with caution.
+    Studio's property groups and the scripting component API are different. A
+    label shown in the Properties panel is not automatically a component name or
+    a Luau field.
 
 # UIClips
 
-Stub
+`UIClips` is an exact, case-sensitive built-in component name. You can use it
+with [`game.World.Query`](../query.md), `Query:With`, `Query:Without`,
+[`game.World.Each`](../query.md#gameworldeach), and the Instance component
+methods.
 
-Currently, this component is only accessible to scripts via [Query Filters](/luduvo-scripting-docs/api/query) and cannot be directly read or edited through scripts.
+## Script access
 
-## Properties
-This component currently has no properties editable through queries, Instances, or any other means.
+This component can filter Query rows, but it does not expose a whole-value Query column in this build. No separate fixed Instance property, Instance method, or game-service binding was found for its stored fields.
+
+Inspector fields are serialization/editor metadata and are not automatically
+available as Luau fields. See [Components](index.md) for that distinction and
+[Instances](../instances.md#properties) for fixed property types and write scope.
