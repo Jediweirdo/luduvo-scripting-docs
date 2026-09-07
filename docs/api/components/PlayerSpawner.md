@@ -28,5 +28,5 @@ types and write scope.
 | Field | Stored type | Notes |
 | --- | --- | --- |
 | `character` | `Enum` |  |
-| `respawnDelay` | `f32` |  |
+| `respawnDelay` | `number` |  |
 
